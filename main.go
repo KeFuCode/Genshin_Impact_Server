@@ -10,11 +10,9 @@ func main() {
 
 	player := game.NewTestPlayer()
 
-	player.RecvSetIcon(1) // HuTao
-	player.RecvSetIcon(2) // WenDi
-	player.RecvSetIcon(3) // ZhongLi
-
-	player.RecvSetCard(11) // HuTao
-	player.RecvSetCard(22) // WenDi
-	player.RecvSetCard(33) // ZhongLi
+	player.RecvSetName("好人")
+	player.RecvSetName("坏人")
+	player.RecvSetName("求外挂带")
+	player.RecvSetName("好玩")
+	player.RecvSetName("感觉不如原神...画质")
 }

@@ -41,3 +41,15 @@ func (self *ModPlayer) SetCard(cardId int, player *Player) {
 	player.ModPlayer.Card = cardId
 	fmt.Println("Now Card: ", player.ModPlayer.Card)
 }
+
+func (self *ModPlayer) RecvSetName(name string, player *Player) {
+
+	player.ModPlayer.Name = name
+	fmt.Println("Now Name: ", player.ModPlayer.Name)
+}
+
+func (self *ModPlayer) RecvSetSign(sign string, player *Player) {
+
+	player.ModPlayer.Sign = sign
+	fmt.Println("Now Name: ", player.ModPlayer.Sign)
+}

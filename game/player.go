@@ -33,3 +33,21 @@ func (self *Player) RecvSetCard(cardId int) {
 	// debug site
 	self.ModPlayer.SetCard(cardId, self)
 }
+
+func (self *Player) RecvSetName(name string) {
+	if GetManageBanWord().IsBanWord(name) {
+		return
+	}
+
+	// debug site
+	self.ModPlayer.RecvSetName(name, self)
+}
+
+func (self *Player) RecvSetSign(sign string) {
+	if GetManageBanWord().IsBanWord(sign) {
+		return
+	}
+
+	// debug site
+	self.ModPlayer.RecvSetSign(sign, self)
+}
