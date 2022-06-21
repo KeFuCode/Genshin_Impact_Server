@@ -18,6 +18,7 @@ func NewTestPlayer() *Player {
 	// 模块数据初始化
 	player.ModPlayer.Icon = 0
 	player.ModPlayer.Card = 0
+	player.ModPlayer.PlayerLevel = 1 // init level is 1
 	//*******************************
 
 	return player

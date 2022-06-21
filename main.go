@@ -17,19 +17,14 @@ func main() {
 	// each 10s touch once
 	go game.GetManageBanWord().Run()
 
-	player := game.NewTestPlayer()
-	player.RecvSetIcon(1)
+	playerGM := game.NewTestPlayer()
 
 	// each 1s touch once
-	triker := time.NewTicker(time.Second * 1)
+	triker := time.NewTicker(time.Second * 3)
 	for {
 		select {
 		case <-triker.C:
-			if time.Now().Unix()%3 == 0 {
-				player.RecvSetName("专业代练")
-			} else if time.Now().Unix()%5 == 0 {
-				player.RecvSetName("正常名字")
-			}
+			playerGM.ModPlayer.AddExp(5000)
 		}
 	}
 

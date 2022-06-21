@@ -1,6 +1,9 @@
 package game
 
-import "fmt"
+import (
+	"fmt"
+	"server/bin/csvs"
+)
 
 type ModPlayer struct {
 	// 可见字段
@@ -21,7 +24,7 @@ type ModPlayer struct {
 	IsGm       int
 }
 
-// internal interface: set ModPlayer inner value
+// external interface: gamer set ModPlayer inner value
 func (self *ModPlayer) SetIcon(iconId int, player *Player) {
 	if !player.ModIcon.IsHasIcon(iconId) {
 		// 通知客户端，操作非法
@@ -51,5 +54,30 @@ func (self *ModPlayer) RecvSetName(name string, player *Player) {
 func (self *ModPlayer) RecvSetSign(sign string, player *Player) {
 
 	player.ModPlayer.Sign = sign
-	fmt.Println("Now Name: ", player.ModPlayer.Sign)
+	fmt.Println("Now Sign: ", player.ModPlayer.Sign)
+}
+
+// internal interface: gamer do something, then server give exp to gamer's role.
+func (self *ModPlayer) AddExp(exp int) {
+	self.PlayerExp += exp
+
+	for {
+		config := csvs.GetNowLevelConfig(self.PlayerLevel)
+		if config == nil {
+			break
+		}
+		if config.PlayerExp == 0 { // level max to 60
+			break
+		}
+		// finish task ?  `todo`
+		// if finish the task, then do
+		if self.PlayerExp >= config.PlayerExp {
+			self.PlayerLevel += 1
+			self.PlayerExp -= config.PlayerExp
+		} else {
+			break
+		}
+	}
+
+	fmt.Println("now level:", self.PlayerLevel, "---now exp:", self.PlayerExp)
 }
