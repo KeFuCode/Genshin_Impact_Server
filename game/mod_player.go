@@ -21,6 +21,7 @@ type ModPlayer struct {
 	IsGm       int
 }
 
+// internal interface: set ModPlayer inner value
 func (self *ModPlayer) SetIcon(iconId int, player *Player) {
 	if !player.ModIcon.IsHasIcon(iconId) {
 		// 通知客户端，操作非法
@@ -28,5 +29,15 @@ func (self *ModPlayer) SetIcon(iconId int, player *Player) {
 	}
 
 	player.ModPlayer.Icon = iconId
-	fmt.Println("当前图标：", player.ModPlayer.Icon)
+	fmt.Println("Now Icon: ", player.ModPlayer.Icon)
+}
+
+func (self *ModPlayer) SetCard(cardId int, player *Player) {
+	if !player.ModCard.IsHasCard(cardId) {
+		// 通知客户端，操作非法
+		return
+	}
+
+	player.ModPlayer.Card = cardId
+	fmt.Println("Now Card: ", player.ModPlayer.Card)
 }
