@@ -44,11 +44,17 @@ func (self *ManageBanWord) IsBanWord(txt string) bool {
 }
 
 func (self *ManageBanWord) Run() {
+	// updata base word library
+
 	triker := time.NewTicker(time.Second * 1)
 	for {
 		select {
-		case <-triker.C:
-			fmt.Println(time.Now().Unix()) // use 
+		case <-triker.C: // triker will touch every 1s
+			if time.Now().Unix()%10 == 0 {
+				fmt.Println("update word library")
+			} else {
+				// fmt.Println("waiting...")
+			}
 		}
 	}
 }
