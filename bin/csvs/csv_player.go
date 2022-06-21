@@ -25,5 +25,5 @@ func GetNowLevelConfig(level int) *ConfigPlayerLevel {
 		return nil
 	}
 
-	return ConfigPlayerLevelSlice[level]
+	return ConfigPlayerLevelSlice[level-1] // query level: 1-60 , then level-1
 }

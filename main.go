@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"server/bin/csvs"
 	"server/game"
-	"time"
+	_"time"
 )
 
 func main() {
@@ -18,14 +18,16 @@ func main() {
 	go game.GetManageBanWord().Run()
 
 	playerGM := game.NewTestPlayer()
+	playerGM.ModPlayer.AddExp(10000000, playerGM)
 
-	// each 1s touch once
+/* 	// each 1s touch once
 	triker := time.NewTicker(time.Second * 3)
 	for {
 		select {
 		case <-triker.C:
 			playerGM.ModPlayer.AddExp(5000)
 		}
-	}
+	} */
+
 
 }

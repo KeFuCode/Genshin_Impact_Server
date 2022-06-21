@@ -58,7 +58,7 @@ func (self *ModPlayer) RecvSetSign(sign string, player *Player) {
 }
 
 // internal interface: gamer do something, then server give exp to gamer's role.
-func (self *ModPlayer) AddExp(exp int) {
+func (self *ModPlayer) AddExp(exp int, player *Player) {
 	self.PlayerExp += exp
 
 	for {
@@ -69,7 +69,11 @@ func (self *ModPlayer) AddExp(exp int) {
 		if config.PlayerExp == 0 { // level max to 60
 			break
 		}
-		// finish task ?  `todo`
+		// finish task? if finished, continue run; else break
+		if config.ChapterId > 0 && !player.ModUniqueTask.IsTaskFinish(config.ChapterId) {
+			break
+		}
+
 		// if finish the task, then do
 		if self.PlayerExp >= config.PlayerExp {
 			self.PlayerLevel += 1
