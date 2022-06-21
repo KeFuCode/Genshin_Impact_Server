@@ -3,6 +3,7 @@ package game
 import (
 	"fmt"
 	"regexp"
+	"server/bin/csvs"
 	"time"
 )
 
@@ -44,7 +45,8 @@ func (self *ManageBanWord) IsBanWord(txt string) bool {
 }
 
 func (self *ManageBanWord) Run() {
-	// updata base word library
+	// load base word library
+	self.BanWordBase = csvs.GetBanWordBase()
 
 	triker := time.NewTicker(time.Second * 1)
 	for {

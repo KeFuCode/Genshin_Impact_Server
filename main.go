@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"server/bin/csvs"
 	"server/game"
 	"time"
 )
@@ -9,6 +10,7 @@ import (
 func main() {
 	//********************
 	// init: load server config
+	csvs.CheckLoadCsv()
 
 	fmt.Printf("Data Test ---- start\n")
 
@@ -18,16 +20,16 @@ func main() {
 	player := game.NewTestPlayer()
 	player.RecvSetIcon(1)
 
-	// each 3s touch once
-	trikerIn := time.NewTicker(time.Second * 3)
-	// each 5s touch once
-	trikerOut := time.NewTicker(time.Second * 5)
+	// each 1s touch once
+	triker := time.NewTicker(time.Second * 1)
 	for {
 		select {
-		case <-trikerIn.C:
-			player.RecvSetIcon(int(time.Now().Unix()))
-		case <-trikerOut.C:
-			player.RecvSetName("test~test")
+		case <-triker.C:
+			if time.Now().Unix()%3 == 0 {
+				player.RecvSetName("专业代练")
+			} else if time.Now().Unix()%5 == 0 {
+				player.RecvSetName("正常名字")
+			}
 		}
 	}
 
