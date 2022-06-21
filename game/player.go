@@ -18,3 +18,8 @@ func NewTestPlayer() *Player {
 
 	return player
 }
+
+// external interface: receive client request
+func (self *Player) RecvSetIcon(iconId int) {
+	self.ModPlayer.SetIcon(iconId, self)
+}

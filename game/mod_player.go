@@ -21,12 +21,12 @@ type ModPlayer struct {
 	IsGm       int
 }
 
-func (self *Player) RecvSetIcon(iconId int) {
-	if !self.ModIcon.IsHasIcon(iconId) {
+func (self *ModPlayer) SetIcon(iconId int, player *Player) {
+	if !player.ModIcon.IsHasIcon(iconId) {
 		// 通知客户端，操作非法
 		return
 	}
 
-	self.ModPlayer.Icon = iconId
-	fmt.Println("当前图标：", self.ModPlayer.Icon)
+	player.ModPlayer.Icon = iconId
+	fmt.Println("当前图标：", player.ModPlayer.Icon)
 }
