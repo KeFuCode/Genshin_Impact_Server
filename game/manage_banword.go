@@ -3,6 +3,7 @@ package game
 import (
 	"fmt"
 	"regexp"
+	"time"
 )
 
 var manageBanWord *ManageBanWord
@@ -40,4 +41,14 @@ func (self *ManageBanWord) IsBanWord(txt string) bool {
 	}
 
 	return false
+}
+
+func (self *ManageBanWord) Run() {
+	triker := time.NewTicker(time.Second * 1)
+	for {
+		select {
+		case <-triker.C:
+			fmt.Println(time.Now().Unix()) // use 
+		}
+	}
 }

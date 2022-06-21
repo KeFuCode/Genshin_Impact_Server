@@ -46,3 +46,22 @@ Player 作为最上层模块，接收到 Client 发送的消息后，调用 ModP
 #d 管理类与玩家类区别
 玩家连接客户端之后，玩家线程被动创建。公共管理类，需要 server 启动后主动创建。
 #e 单例模式实现管理类 管理类与玩家类区别
+
+## 4 定时器功能
+增加一个定时器，实现扩充禁用词。
+
+#d 定时器作用
+定时器给行为赋予了时间维度，每隔相同时间，就会触发一次行为。
+#e Run() 定时器作用
+```go
+func (self *ManageBanWord) Run() {
+	triker := time.NewTicker(time.Second * 1)
+	for {
+		select {
+		case <-triker.C:
+			fmt.Println(time.Now().Unix())
+		}
+	}
+}
+```
+
