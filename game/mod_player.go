@@ -19,7 +19,7 @@ type ModPlayer struct {
 	WorldLevelNow  int
 	WorldLevelCool int64 // operate world_level cool time
 	ShowTeam       []int
-	ShowCard       int
+	ShowCard       []int
 	Birth          int
 
 	// 隐藏字段
@@ -148,6 +148,26 @@ func (self *ModPlayer) IsBirthDay() bool {
 	}
 
 	return false
+}
+
+func (self *ModPlayer) SetShowCard(showCard []int, player *Player) {
+	cardExist := make(map[int]int)
+	newList := make([]int, 0)
+
+	for _, cardId := range showCard {
+		_, ok := cardExist[cardId]
+		if ok {
+			continue
+		}
+		if !player.ModCard.IsHasCard(cardId) {
+			continue
+		}
+		newList = append(newList, cardId)
+		cardExist[cardId] = 1
+	}
+
+	self.ShowCard = newList
+	fmt.Println(self.ShowCard)
 }
 
 // internal interface: gamer do something, then server give exp to gamer's role.
