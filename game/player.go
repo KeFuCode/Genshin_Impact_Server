@@ -1,6 +1,10 @@
 package game
 
-import _"sync"
+import (
+	"fmt"
+	_ "sync"
+	"time"
+)
 
 const (
 	TASK_STATE_INIT   = 0
@@ -98,4 +102,16 @@ func (self *Player) SetShowTeam(showRole []int) {
 // hide show team
 func (self *Player) SetHideShowTeam(isHide int) {
 	self.ModPlayer.SetHideShowTeam(isHide, self)
+}
+
+// internal function
+func (self *Player) Run() {
+	triker := time.NewTicker(time.Second * 1)
+
+	for {
+		select {
+		case <-triker.C:
+			fmt.Println(time.Now().Unix())
+		}
+	}
 }

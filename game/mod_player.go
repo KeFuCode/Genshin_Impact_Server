@@ -29,8 +29,8 @@ type ModPlayer struct {
 	Birth          int
 
 	// 隐藏字段
-	IsProhibit int // account status
-	IsGm       int // GM account status
+	Prohibit int // account status
+	IsGm     int // GM account status
 }
 
 // external interface: gamer set ModPlayer inner value
@@ -244,4 +244,16 @@ func (self *ModPlayer) AddExp(exp int, player *Player) {
 	}
 
 	fmt.Println("now level:", self.PlayerLevel, "---now exp:", self.PlayerExp)
+}
+
+func (self *ModPlayer) SetProhibit(prohibit int) {
+	self.Prohibit = prohibit
+}
+
+func (self *ModPlayer) SetIsGM(isGM int) {
+	self.IsGm = isGM
+}
+
+func (self *ModPlayer) IsCanEnter() bool {
+	return int64(self.Prohibit) < time.Now().Unix()
 }
