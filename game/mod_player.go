@@ -157,6 +157,10 @@ func (self *ModPlayer) IsBirthDay() bool {
 }
 
 func (self *ModPlayer) SetShowCard(showCard []int, player *Player) {
+	if len(showCard) > csvs.SHOW_SIZE {
+		return
+	}
+
 	cardExist := make(map[int]int)
 	newList := make([]int, 0)
 
@@ -177,6 +181,11 @@ func (self *ModPlayer) SetShowCard(showCard []int, player *Player) {
 }
 
 func (self *ModPlayer) SetShowTeam(showRole []int, player *Player) {
+	if len(showRole) > csvs.SHOW_SIZE {
+		fmt.Println("message struct error!")
+		return
+	}
+
 	roleExist := make(map[int]int)
 	newList := make([]*ShowRole, 0)
 
@@ -191,7 +200,7 @@ func (self *ModPlayer) SetShowTeam(showRole []int, player *Player) {
 		showRole := new(ShowRole)
 		showRole.RoleId = roleId
 		showRole.RoleLevel = player.ModRole.GetRoleLevel(roleId)
-		
+
 		newList = append(newList, showRole)
 		roleExist[roleId] = 1
 	}

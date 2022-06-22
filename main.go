@@ -16,7 +16,7 @@ func main() {
 	fmt.Printf("Data Test ---- start\n")
 
 	playerGM := game.NewTestPlayer()
-	playerGM.ModPlayer.SetShowTeam([]int{1001, 1001, 1001, 1002, 1001, 1005}, playerGM)
+	playerGM.ModPlayer.SetShowTeam([]int{1001, 1001, 1001, 1002, 1001, 1005, 1001, 1001, 1001, 1002, 1001, 1005}, playerGM)
 
 	// each 1s touch once
 	/* 	triker := time.NewTicker(time.Second * 1)
