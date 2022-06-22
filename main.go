@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"server/bin/csvs"
 	"server/game"
-	_ "time"
+	"time"
 )
 
 func main() {
@@ -17,35 +17,19 @@ func main() {
 	fmt.Printf("Data Test ---- start\n")
 
 	playerGM := game.NewTestPlayer()
-	playerGM.ModPlayer.AddExp(10000000, playerGM)
 
-	/* 	// each 1s touch once
-	   	triker := time.NewTicker(time.Second * 3)
-	   	for {
-	   		select {
-	   		case <-triker.C:
-	   			playerGM.ModPlayer.AddExp(5000)
-	   		}
-	   	} */
-
-	go playerLoadConfig(playerGM)
-	go playerLoadConfig(playerGM)
-	go playerLoadConfig(playerGM)
-	go playerLoadConfig(playerGM)
-	go playerLoadConfig(playerGM)
-
+	// each 1s touch once
+	triker := time.NewTicker(time.Second * 1)
 	for {
-		//
+		select {
+		case <-triker.C:
+			if time.Now().Unix()%3 == 0 {
+				playerGM.ReduceWorldLevel()
+			} else if time.Now().Unix()%5 == 0 {
+				playerGM.ReturnWorldLevel()
+			}
+		}
 	}
 
 	return
-}
-
-func playerLoadConfig(player *game.Player) {
-	for i := 0; i < 1000000; i++ {
-		config := csvs.ConfigUniqueTaskMap[10001]
-		if config != nil {
-			fmt.Println(config.TaskId)
-		}
-	}
 }

@@ -31,6 +31,9 @@ func NewTestPlayer() *Player {
 	player.ModPlayer.Icon = 0
 	player.ModPlayer.Card = 0
 	player.ModPlayer.PlayerLevel = 1 // init level is 1
+	player.ModPlayer.WorldLevel = 6
+	player.ModPlayer.WorldLevelNow = 6
+
 	//*******************************
 
 	return player
@@ -63,4 +66,13 @@ func (self *Player) RecvSetSign(sign string) {
 
 	// debug site
 	self.ModPlayer.RecvSetSign(sign, self)
+}
+
+// reduce 1 world level 
+func(self *Player) ReduceWorldLevel()  {
+	self.ModPlayer.ReduceWorldLevel(self)
+}
+// recover world level
+func(self *Player) ReturnWorldLevel()  {
+	self.ModPlayer.ReturnWorldLevel(self)
 }

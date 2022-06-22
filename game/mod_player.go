@@ -3,11 +3,12 @@ package game
 import (
 	"fmt"
 	"server/bin/csvs"
+	"time"
 )
 
 type ModPlayer struct {
 	// 可见字段
-	UserId         int
+	UserId         int // unique_id
 	Icon           int
 	Card           int
 	Name           string
@@ -15,13 +16,14 @@ type ModPlayer struct {
 	PlayerLevel    int
 	PlayerExp      int
 	WorldLevel     int
-	WorldLevelCool int64
+	WorldLevelNow  int
+	WorldLevelCool int64 // operate world_level cool time
 	ShowTeam       []int
 	ShowCard       int
 
 	// 隐藏字段
-	IsProhibit int
-	IsGm       int
+	IsProhibit int // account status
+	IsGm       int // GM account status
 }
 
 // external interface: gamer set ModPlayer inner value
@@ -55,6 +57,45 @@ func (self *ModPlayer) RecvSetSign(sign string, player *Player) {
 
 	player.ModPlayer.Sign = sign
 	fmt.Println("Now Sign: ", player.ModPlayer.Sign)
+}
+
+func (self *ModPlayer) ReduceWorldLevel(player *Player) {
+	if self.WorldLevel < csvs.REDUCE_WORLD_LEVEL_START {
+		fmt.Println("operate fail: --- now world_level: ", self.WorldLevel)
+		return
+	}
+
+	if self.WorldLevel-self.WorldLevelNow >= csvs.REDUCE_WORLD_LEVEL_MAX {
+		fmt.Println("operate fail: --- now world_level: ", self.WorldLevel, "--- real world level: ", self.WorldLevelNow)
+		return
+	}
+
+	if time.Now().Unix() < self.WorldLevelCool {
+		fmt.Println("operate fail: --- cooling")
+		return
+	}
+
+	self.WorldLevelNow -= 1
+	self.WorldLevelCool = time.Now().Unix() + csvs.REDUCE_WORLD_LEVEL_COOL_TIME
+	fmt.Println("operate success: --- now world_level: ", self.WorldLevel, "--- real world level: ", self.WorldLevelNow)
+	return
+}
+
+func (self *ModPlayer) ReturnWorldLevel(player *Player) {
+	if self.WorldLevel == self.WorldLevelNow {
+		fmt.Println("operate fail: --- now world_level: ", self.WorldLevel, "--- real world level: ", self.WorldLevelNow)
+		return
+	}
+
+	if time.Now().Unix() < self.WorldLevelCool {
+		fmt.Println("operate fail: --- cooling")
+		return
+	}
+
+	self.WorldLevelNow += 1
+	self.WorldLevelCool = time.Now().Unix() + csvs.REDUCE_WORLD_LEVEL_COOL_TIME
+	fmt.Println("operate success: --- now world_level: ", self.WorldLevel, "--- real world level: ", self.WorldLevelNow)
+	return
 }
 
 // internal interface: gamer do something, then server give exp to gamer's role.
