@@ -68,11 +68,17 @@ func (self *Player) RecvSetSign(sign string) {
 	self.ModPlayer.RecvSetSign(sign, self)
 }
 
-// reduce 1 world level 
-func(self *Player) ReduceWorldLevel()  {
+// reduce 1 world level
+func (self *Player) ReduceWorldLevel() {
 	self.ModPlayer.ReduceWorldLevel(self)
 }
+
 // recover world level
-func(self *Player) ReturnWorldLevel()  {
+func (self *Player) ReturnWorldLevel() {
 	self.ModPlayer.ReturnWorldLevel(self)
+}
+
+// set birthday: month * 100 + day
+func (self *Player) SetBirth(birth int) {
+	self.ModPlayer.SetBirth(birth, self)
 }

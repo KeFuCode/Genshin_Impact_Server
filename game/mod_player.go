@@ -20,6 +20,7 @@ type ModPlayer struct {
 	WorldLevelCool int64 // operate world_level cool time
 	ShowTeam       []int
 	ShowCard       int
+	Birth          int
 
 	// 隐藏字段
 	IsProhibit int // account status
@@ -96,6 +97,57 @@ func (self *ModPlayer) ReturnWorldLevel(player *Player) {
 	self.WorldLevelCool = time.Now().Unix() + csvs.REDUCE_WORLD_LEVEL_COOL_TIME
 	fmt.Println("operate success: --- now world_level: ", self.WorldLevel, "--- real world level: ", self.WorldLevelNow)
 	return
+}
+
+func (self *ModPlayer) SetBirth(birth int, player *Player) {
+	if self.Birth > 0 {
+		fmt.Println("your birthday already set")
+		return
+	}
+
+	month := birth / 100
+	day := birth % 100
+
+	switch month {
+	case 1, 3, 5, 7, 8, 10, 12:
+		if day <= 0 || day > 31 {
+			fmt.Println(month, "month doesn't have", day, "day")
+			return
+		}
+	case 4, 6, 9, 11:
+		if day <= 0 || day > 30 {
+			fmt.Println(month, "month doesn't have", day, "day")
+			return
+		}
+	case 2:
+		if day <= 0 || day > 29 {
+			fmt.Println(month, "month doesn't have", day, "day")
+			return
+		}
+	default:
+		fmt.Println(month, "month isn't exist")
+		return
+	}
+
+	self.Birth = birth
+	fmt.Println("set success, birthday is: ", month, "month", day, "day")
+
+	if self.IsBirthDay() {
+		fmt.Println("happy birthday!")
+	} else {
+		fmt.Println("your birthday is coming soon~")
+	}
+}
+
+func (self *ModPlayer) IsBirthDay() bool {
+	month := time.Now().Month()
+	day := time.Now().Day()
+
+	if int(month) == self.Birth/100 && day == self.Birth%100 {
+		return true
+	}
+
+	return false
 }
 
 // internal interface: gamer do something, then server give exp to gamer's role.
