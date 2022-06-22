@@ -1,14 +1,26 @@
 Genshin_Impact_Server
-# 基础模块
-## 0 文件结构
+# 文件结构
 1. bin 文件夹
    - csvs 文件夹：放入配置表
    - 编译后的执行文件
-2. go.mod
+2. csv 文件夹
+   csv 格式的配置数据
+3. game 文件夹
+   - manage_banword.go
+   - mod_card.go
+   - mod_icon.go
+   - mod_player.go
+   - mod_role.go
+   - mod_uniquetask.go
+   - player.go
+4. utils 文件夹
+   - csvutils.go
+5. go.mod
    包依赖管理
-3. main.go
+6. main.go
    程序的入口
 
+# 基础模块
 ## 1 基础模块
 玩家从客户端登陆后，首先拿到的就是基础信息。
 这个模块对应数据库中的一张表
@@ -123,3 +135,19 @@ bool 值在实际使用中较少，true/false 在数据库中存储时，有时�
 游戏中最多封禁到 203x 年，参考 int64 和 int 取值范围，使用的应该是 int 类型。
 
 封禁和 GM 功能都是由服务器触发，不被外部调用，因此是 `internal function` 。
+# 背包模块
+资源管理，负责各模块间资源调配。
+将 icon card 等道具与 id 一一对应，便于资源分配与管理。
+
+模块功能：
+1. 物品识别
+2. 物品增加
+3. 物品消耗
+4. 物品使用
+5. 角色模块 --> 头像模块
+
+背包模块为什么不称为资源管理模块？  
+背包模块只处理部分物品，自己不方便处理、或不愿意处理的物品，交给其他模块处理。
+## 1 物品识别
+根据 itemId 识别出物品名称。
+增加 csv.item.go 保存 item 配置信息，mod_bag 作为背包模块。

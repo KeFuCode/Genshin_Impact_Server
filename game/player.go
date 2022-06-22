@@ -18,6 +18,7 @@ type Player struct {
 	ModCard       *ModCard
 	ModUniqueTask *ModUniqueTask
 	ModRole       *ModRole
+	ModBag        *ModBag
 }
 
 func NewTestPlayer() *Player {
@@ -31,6 +32,7 @@ func NewTestPlayer() *Player {
 	player.ModUniqueTask.MyTaskInfo = make(map[int]*TaskInfo)
 	// player.ModUniqueTask.Locker = new(sync.RWMutex)
 	player.ModRole = new(ModRole)
+	player.ModBag = new(ModBag)
 
 	//*******************************
 	// 模块数据初始化
