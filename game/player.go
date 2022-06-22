@@ -1,6 +1,6 @@
 package game
 
-import "sync"
+import _"sync"
 
 const (
 	TASK_STATE_INIT   = 0
@@ -13,6 +13,7 @@ type Player struct {
 	ModIcon       *ModIcon
 	ModCard       *ModCard
 	ModUniqueTask *ModUniqueTask
+	ModRole       *ModRole
 }
 
 func NewTestPlayer() *Player {
@@ -24,7 +25,8 @@ func NewTestPlayer() *Player {
 	player.ModCard = new(ModCard)
 	player.ModUniqueTask = new(ModUniqueTask)
 	player.ModUniqueTask.MyTaskInfo = make(map[int]*TaskInfo)
-	player.ModUniqueTask.Locker = new(sync.RWMutex)
+	// player.ModUniqueTask.Locker = new(sync.RWMutex)
+	player.ModRole = new(ModRole)
 
 	//*******************************
 	// 模块数据初始化
@@ -86,4 +88,14 @@ func (self *Player) SetBirth(birth int) {
 // set show card
 func (self *Player) SetShowCard(showCard []int) {
 	self.ModPlayer.SetShowCard(showCard, self)
+}
+
+// set show team
+func (self *Player) SetShowTeam(showRole []int) {
+	self.ModPlayer.SetShowTeam(showRole, self)
+}
+
+// hide show team
+func (self *Player) SetHideShowTeam(isHide int) {
+	self.ModPlayer.SetHideShowTeam(isHide, self)
 }

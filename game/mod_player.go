@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+type ShowRole struct {
+	RoleId    int
+	RoleLevel int
+}
+
 type ModPlayer struct {
 	// 可见字段
 	UserId         int // unique_id
@@ -18,7 +23,8 @@ type ModPlayer struct {
 	WorldLevel     int
 	WorldLevelNow  int
 	WorldLevelCool int64 // operate world_level cool time
-	ShowTeam       []int
+	ShowTeam       []*ShowRole
+	HideShowTeam   int // show_team status: 0 is show, 1 is hidden
 	ShowCard       []int
 	Birth          int
 
@@ -168,6 +174,38 @@ func (self *ModPlayer) SetShowCard(showCard []int, player *Player) {
 
 	self.ShowCard = newList
 	fmt.Println(self.ShowCard)
+}
+
+func (self *ModPlayer) SetShowTeam(showRole []int, player *Player) {
+	roleExist := make(map[int]int)
+	newList := make([]*ShowRole, 0)
+
+	for _, roleId := range showRole {
+		_, ok := roleExist[roleId]
+		if ok {
+			continue
+		}
+		if !player.ModRole.IsHasRole(roleId) {
+			continue
+		}
+		showRole := new(ShowRole)
+		showRole.RoleId = roleId
+		showRole.RoleLevel = player.ModRole.GetRoleLevel(roleId)
+		
+		newList = append(newList, showRole)
+		roleExist[roleId] = 1
+	}
+
+	self.ShowTeam = newList
+	fmt.Println(self.ShowTeam)
+}
+
+func (self *ModPlayer) SetHideShowTeam(isHide int, player *Player) {
+	if isHide != csvs.LOGIC_FALSE && isHide != csvs.LOGIC_TRUE {
+		return
+	}
+
+	self.HideShowTeam = isHide
 }
 
 // internal interface: gamer do something, then server give exp to gamer's role.
