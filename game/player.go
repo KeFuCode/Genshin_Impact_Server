@@ -29,6 +29,7 @@ func NewTestPlayer() *Player {
 	player.ModIcon = new(ModIcon)
 	player.ModIcon.IconInfo = make(map[int]*Icon)
 	player.ModCard = new(ModCard)
+	player.ModCard.CardInfo = make(map[int]*Card)
 	player.ModUniqueTask = new(ModUniqueTask)
 	player.ModUniqueTask.MyTaskInfo = make(map[int]*TaskInfo)
 	// player.ModUniqueTask.Locker = new(sync.RWMutex)
@@ -38,8 +39,6 @@ func NewTestPlayer() *Player {
 
 	//*******************************
 	// 模块数据初始化
-	player.ModPlayer.Icon = 0
-	player.ModPlayer.Card = 0
 	player.ModPlayer.PlayerLevel = 1 // init level is 1
 	player.ModPlayer.WorldLevel = 6
 	player.ModPlayer.WorldLevelNow = 6

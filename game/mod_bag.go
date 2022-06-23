@@ -27,6 +27,6 @@ func (self *ModBag) AddItem(itemId int, player *Player) {
 	case csvs.ITEMTYPE_ICON:
 		player.ModIcon.AddItem(itemId)
 	case csvs.ITEMTYPE_CARD:
-		fmt.Println("card: ", itemConfig.ItemName)
+		player.ModCard.AddItem(itemId, 12)
 	}
 }

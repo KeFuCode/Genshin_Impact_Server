@@ -48,6 +48,7 @@ func (self *ModPlayer) SetIcon(iconId int, player *Player) {
 func (self *ModPlayer) SetCard(cardId int, player *Player) {
 	if !player.ModCard.IsHasCard(cardId) {
 		// 通知客户端，操作非法
+		fmt.Println("no card: ", cardId)
 		return
 	}
 

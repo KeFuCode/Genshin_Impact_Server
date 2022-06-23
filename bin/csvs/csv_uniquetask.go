@@ -20,5 +20,5 @@ func init() {
 
 	utils.GetCsvUtilMgr().LoadCsv("UniqueTask", &ConfigUniqueTaskMap)
 
-	fmt.Println("init csv_player")
+	fmt.Println("init uniquetask")
 }

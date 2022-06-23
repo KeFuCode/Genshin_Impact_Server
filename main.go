@@ -17,9 +17,9 @@ func main() {
 	fmt.Printf("Data Test ---- start\n")
 
 	playerTest := game.NewTestPlayer()
-	playerTest.ModPlayer.SetIcon(3000001, playerTest)
-	playerTest.ModBag.AddItem(3000001, playerTest)
-	playerTest.ModPlayer.SetIcon(3000001, playerTest)
+	playerTest.ModPlayer.SetCard(4000001, playerTest)
+	playerTest.ModBag.AddItem(4000001, playerTest)
+	playerTest.ModPlayer.SetCard(4000001, playerTest)
 
 	// each 10s touch once
 	// triker := time.NewTicker(time.Second * 10)
