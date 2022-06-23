@@ -35,7 +35,7 @@ func NewTestPlayer() *Player {
 	// player.ModUniqueTask.Locker = new(sync.RWMutex)
 	player.ModRole = new(ModRole)
 	player.ModBag = new(ModBag)
-
+	player.ModBag.BagInfo = make(map[int]*ItemInfo)
 
 	//*******************************
 	// 模块数据初始化
