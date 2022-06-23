@@ -27,12 +27,14 @@ func NewTestPlayer() *Player {
 	player := new(Player)
 	player.ModPlayer = new(ModPlayer)
 	player.ModIcon = new(ModIcon)
+	player.ModIcon.IconInfo = make(map[int]*Icon)
 	player.ModCard = new(ModCard)
 	player.ModUniqueTask = new(ModUniqueTask)
 	player.ModUniqueTask.MyTaskInfo = make(map[int]*TaskInfo)
 	// player.ModUniqueTask.Locker = new(sync.RWMutex)
 	player.ModRole = new(ModRole)
 	player.ModBag = new(ModBag)
+
 
 	//*******************************
 	// 模块数据初始化

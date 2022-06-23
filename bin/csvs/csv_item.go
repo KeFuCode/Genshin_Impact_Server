@@ -25,7 +25,7 @@ func init() {
 
 	utils.GetCsvUtilMgr().LoadCsv("Item", &ConfigItemMap)
 
-	fmt.Println("init csv_player")
+	fmt.Println("init csv_item")
 }
 
 func GetItemConfig(itemId int) *ConfigItem  {

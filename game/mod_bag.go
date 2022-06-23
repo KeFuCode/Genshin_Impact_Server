@@ -12,7 +12,7 @@ func (self *ModBag) IsHasItem(itemId int) bool {
 	return true
 }
 
-func (self *ModBag) AddItem(itemId int) {
+func (self *ModBag) AddItem(itemId int, player *Player) {
 	itemConfig := csvs.GetItemConfig(itemId)
 	if itemConfig == nil {
 		fmt.Println(itemId, "item isn't exist")
@@ -25,7 +25,7 @@ func (self *ModBag) AddItem(itemId int) {
 	case csvs.ITEMTYPE_ROLE:
 		fmt.Println("role: ", itemConfig.ItemName)
 	case csvs.ITEMTYPE_ICON:
-		fmt.Println("icon: ", itemConfig.ItemName)
+		player.ModIcon.AddItem(itemId)
 	case csvs.ITEMTYPE_CARD:
 		fmt.Println("card: ", itemConfig.ItemName)
 	}
