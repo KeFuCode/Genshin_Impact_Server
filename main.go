@@ -17,13 +17,7 @@ func main() {
 	fmt.Printf("Data Test ---- start\n")
 
 	playerTest := game.NewTestPlayer()
-	playerTest.ModBag.RemoveItemToBagGM(1000003, 1000)
-	playerTest.ModBag.AddItemToBag(1000003, 500)
-	playerTest.ModBag.AddItemToBag(1000003, 800)
-	playerTest.ModBag.RemoveItemToBagGM(1000003, 1000)
-	playerTest.ModBag.RemoveItemToBagGM(1000003, 1000)
-	playerTest.ModBag.RemoveItemToBagGM(1000003, 1000)
-	playerTest.ModBag.RemoveItemToBagGM(1000003, 1000)
+	go playerTest.Run()
 
 	// each 10s touch once
 	// triker := time.NewTicker(time.Second * 10)
@@ -34,6 +28,10 @@ func main() {
 	// 		go playerTest.Run()
 	// 	}
 	// }
+
+	for {
+		
+	}
 
 	return
 }

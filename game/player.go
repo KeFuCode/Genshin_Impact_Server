@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	_ "sync"
 	"time"
 )
@@ -114,7 +113,11 @@ func (self *Player) Run() {
 	for {
 		select {
 		case <-triker.C:
-			fmt.Println(time.Now().Unix())
+			if time.Now().Unix()%5 == 0 {
+				self.ModBag.AddItem(1000003, 1000, self)
+			} else {
+				self.ModBag.RemoveItemToBag(1000003, 300)
+			}
 		}
 	}
 }
