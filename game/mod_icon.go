@@ -35,3 +35,12 @@ func (self *ModIcon) AddItem(iconId int) {
 	self.IconInfo[iconId] = &Icon{IconId: iconId}
 	fmt.Println("get icon: ", iconId)
 }
+
+func (self *ModIcon) CheckGetIcon(roleId int)  {
+	config := csvs.GetIconConfigByRoleId(roleId)
+	if config == nil {
+		return
+	}
+
+	self.AddItem(config.IconId)
+}

@@ -55,4 +55,7 @@ func (self *ModRole) AddItem(roleId int, num int64, player *Player) {
 	if itemConfig != nil {
 		fmt.Println("get role: ", itemConfig.ItemName, "times: ", roleId, "----", self.RoleInfo[roleId].GetTimes, "times")
 	}
+
+	// check icon when role geted
+	player.ModIcon.CheckGetIcon(roleId)
 }
