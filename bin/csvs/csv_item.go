@@ -11,6 +11,7 @@ const (
 	ITEMTYPE_ICON = 3
 	ITEMTYPE_CARD = 4
 	ITEMTYPE_WEAPON = 6
+	ITEMTYPE_RELICS = 7
 )
 
 type ConfigItem struct {
