@@ -21,6 +21,7 @@ type Player struct {
 	ModBag        *ModBag
 	ModWeapon     *ModWeapon
 	ModRelics     *ModRelics
+	ModCook       *ModCook
 }
 
 func NewTestPlayer() *Player {
@@ -43,6 +44,8 @@ func NewTestPlayer() *Player {
 	player.ModWeapon.WeaponInfo = make(map[int]*Weapon)
 	player.ModRelics = new(ModRelics)
 	player.ModRelics.RelicsInfo = make(map[int]*Relics)
+	player.ModCook = new(ModCook)
+	player.ModCook.CookInfo = make(map[int]*Cook)
 
 	//*******************************
 	// 模块数据初始化

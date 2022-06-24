@@ -6,17 +6,19 @@ import (
 )
 
 const (
-	ITEMTYPE_NORMAL = 1
-	ITEMTYPE_ROLE = 2
-	ITEMTYPE_ICON = 3
-	ITEMTYPE_CARD = 4
-	ITEMTYPE_WEAPON = 6
-	ITEMTYPE_RELICS = 7
+	ITEMTYPE_NORMAL   = 1
+	ITEMTYPE_ROLE     = 2
+	ITEMTYPE_ICON     = 3
+	ITEMTYPE_CARD     = 4
+	ITEMTYPE_WEAPON   = 6
+	ITEMTYPE_RELICS   = 7
+	ITEMTYPE_COOKBOOK = 8 // identify cook_book to determine cook_skills
+	ITEMTYPE_COOk     = 9 // cook skills
 )
 
 type ConfigItem struct {
-	ItemId int `json:"ItemId"`
-	SortType int `json:"SortType"`
+	ItemId   int    `json:"ItemId"`
+	SortType int    `json:"SortType"`
 	ItemName string `json:"ItemName"`
 }
 
@@ -30,10 +32,10 @@ func init() {
 	fmt.Println("init csv_item")
 }
 
-func GetItemConfig(itemId int) *ConfigItem  {
-	return	ConfigItemMap[itemId]
+func GetItemConfig(itemId int) *ConfigItem {
+	return ConfigItemMap[itemId]
 }
 
 func GetItemName(itemId int) string {
-	return	ConfigItemMap[itemId].ItemName
+	return ConfigItemMap[itemId].ItemName
 }

@@ -38,6 +38,8 @@ func (self *ModBag) AddItem(itemId int, num int64, player *Player) {
 		player.ModWeapon.AddItem(itemId, num)
 	case csvs.ITEMTYPE_RELICS:
 		player.ModRelics.AddItem(itemId, num)
+	case csvs.ITEMTYPE_COOk:
+		player.ModCook.AddItem(itemId)
 	default: // like to normal_item
 		self.AddItemToBag(itemId, num)
 	}
