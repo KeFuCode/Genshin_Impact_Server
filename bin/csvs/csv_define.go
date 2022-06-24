@@ -12,4 +12,5 @@ const (
 	SHOW_SIZE                    = 9
 	ADD_ROLE_TIME_NORMAL_MIN     = 2
 	ADD_ROLE_TIME_NORMAL_MAX     = 7
+	WEAPON_MAX_COUNT             = 2000
 )

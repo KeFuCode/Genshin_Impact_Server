@@ -10,6 +10,7 @@ const (
 	ITEMTYPE_ROLE = 2
 	ITEMTYPE_ICON = 3
 	ITEMTYPE_CARD = 4
+	ITEMTYPE_WEAPON = 6
 )
 
 type ConfigItem struct {
@@ -30,4 +31,8 @@ func init() {
 
 func GetItemConfig(itemId int) *ConfigItem  {
 	return	ConfigItemMap[itemId]
+}
+
+func GetItemName(itemId int) string {
+	return	ConfigItemMap[itemId].ItemName
 }
