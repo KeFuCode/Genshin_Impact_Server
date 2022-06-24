@@ -1,8 +1,8 @@
 package game
 
 import (
+	"fmt"
 	_ "sync"
-	"time"
 )
 
 const (
@@ -109,14 +109,35 @@ func (self *Player) SetHideShowTeam(isHide int) {
 
 // internal function
 func (self *Player) Run() {
-	triker := time.NewTicker(time.Second * 1)
 
 	for {
-		select {
-		case <-triker.C:
-			if time.Now().Unix()%5 == 0 {
-				self.ModRole.AddItem(2000017, 7)
-			}
+		fmt.Println("please input operate: 1 --- add item")
+		var action int
+		fmt.Scan(&action)
+		fmt.Println(action)
+		switch action {
+		case 1:
+			self.HandleAddItem()
 		}
 	}
+
+	// triker := time.NewTicker(time.Second * 1)
+
+	// for {
+	// 	select {
+	// 	case <-triker.C:
+	// 		if time.Now().Unix()%5 == 0 {
+	// 			self.ModRole.AddItem(2000017, 7)
+	// 		}
+	// 	}
+	// }
+}
+
+func (self *Player) HandleAddItem() {
+	itemId, itemNum := 0, 0
+	fmt.Println("input itemId")
+	fmt.Scan(&itemId)
+	fmt.Println("input itemNum")
+	fmt.Scan(&itemNum)
+	self.ModBag.AddItem(itemId, int64(itemNum), self)
 }
