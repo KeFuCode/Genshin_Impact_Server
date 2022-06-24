@@ -58,4 +58,8 @@ func (self *ModRole) AddItem(roleId int, num int64, player *Player) {
 
 	// check icon when role geted
 	player.ModIcon.CheckGetIcon(roleId)
+
+	// check card when role geted
+	player.ModCard.CheckGetCard(roleId, 10) // friendliness: 10
+
 }
