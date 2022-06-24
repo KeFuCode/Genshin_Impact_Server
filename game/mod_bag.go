@@ -29,7 +29,7 @@ func (self *ModBag) AddItem(itemId int, num int64, player *Player) {
 	// case csvs.ITEMTYPE_NORMAL:
 	// 	self.AddItemToBag(itemId, num)
 	case csvs.ITEMTYPE_ROLE:
-		player.ModRole.AddItem(itemId, num)
+		player.ModRole.AddItem(itemId, num, player)
 	case csvs.ITEMTYPE_ICON:
 		player.ModIcon.AddItem(itemId)
 	case csvs.ITEMTYPE_CARD:
@@ -82,7 +82,7 @@ func (self *ModBag) RemoveItemToBagGM(itemId int, num int64) {
 	}
 }
 
-func (self *ModBag) RemoveItemToBag(itemId int, num int64) {
+func (self *ModBag) RemoveItemToBag(itemId int, num int64, player *Player) {
 	if !self.HasEnoughItem(itemId, num) {
 		config := csvs.GetItemConfig(itemId)
 		if config != nil {

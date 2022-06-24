@@ -39,14 +39,14 @@ func (self *ModRole) AddItem(roleId int, num int64, player *Player) {
 			self.RoleInfo[roleId] = data
 		} else {
 			// judge the real item
-			fmt.Println("get real item ...")
+			// fmt.Println("get real item ...")
 			self.RoleInfo[roleId].GetTimes++
 			if self.RoleInfo[roleId].GetTimes >= csvs.ADD_ROLE_TIME_NORMAL_MIN &&
 				self.RoleInfo[roleId].GetTimes <= csvs.ADD_ROLE_TIME_NORMAL_MAX {
 				player.ModBag.AddItemToBag(config.Stuff, int64(config.StuffNum))
-				player.ModBag.AddItemToBag(config.StuffItem, int64(config.StuffNum))
+				player.ModBag.AddItemToBag(config.StuffItem, int64(config.StuffItemNum))
 			} else {
-				player.ModBag.AddItemToBag()
+				player.ModBag.AddItemToBag(config.MaxStuffItem, int64(config.MaxStuffItemNum))
 			}
 		}
 	}
