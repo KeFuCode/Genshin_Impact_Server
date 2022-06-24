@@ -33,6 +33,7 @@ func NewTestPlayer() *Player {
 	player.ModUniqueTask.MyTaskInfo = make(map[int]*TaskInfo)
 	// player.ModUniqueTask.Locker = new(sync.RWMutex)
 	player.ModRole = new(ModRole)
+	player.ModRole.RoleInfo = make(map[int]*RoleInfo)
 	player.ModBag = new(ModBag)
 	player.ModBag.BagInfo = make(map[int]*ItemInfo)
 
@@ -114,9 +115,7 @@ func (self *Player) Run() {
 		select {
 		case <-triker.C:
 			if time.Now().Unix()%5 == 0 {
-				self.ModBag.AddItem(1000003, 1000, self)
-			} else {
-				self.ModBag.RemoveItemToBag(1000003, 300)
+				self.ModRole.AddItem(2000017, 7)
 			}
 		}
 	}

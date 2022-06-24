@@ -26,16 +26,16 @@ func (self *ModBag) AddItem(itemId int, num int64, player *Player) {
 	}
 
 	switch itemConfig.SortType {
-	case csvs.ITEMTYPE_NORMAL:
-		self.AddItemToBag(itemId, num)
+	// case csvs.ITEMTYPE_NORMAL:
+	// 	self.AddItemToBag(itemId, num)
 	case csvs.ITEMTYPE_ROLE:
-		fmt.Println("role: ", itemConfig.ItemName)
+		player.ModRole.AddItem(itemId, num)
 	case csvs.ITEMTYPE_ICON:
 		player.ModIcon.AddItem(itemId)
 	case csvs.ITEMTYPE_CARD:
 		player.ModCard.AddItem(itemId, 12)
 	default: // like to normal_item
-		// self.AddItemToBag(itemId, 1)
+		self.AddItemToBag(itemId, num)
 	}
 }
 
