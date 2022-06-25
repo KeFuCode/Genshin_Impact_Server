@@ -14,6 +14,7 @@ const (
 	ITEMTYPE_RELICS   = 7
 	ITEMTYPE_COOKBOOK = 8 // identify cook_book to determine cook_skills
 	ITEMTYPE_COOk     = 9 // cook skills
+	ITEMTYPE_FOOD     = 10 // get food when use cook skills
 )
 
 type ConfigItem struct {

@@ -125,3 +125,47 @@ func (self *ModBag) HasEnoughItem(itemId int, num int64) bool {
 
 	return true
 }
+
+func (self *ModBag) UseItem(itemId int, num int64, player *Player) {
+	itemConfig := csvs.GetItemConfig(itemId)
+	if itemConfig == nil {
+		fmt.Println(itemId, "item isn't exist")
+		return
+	}
+
+	if !self.HasEnoughItem(itemId, num) {
+		config := csvs.GetItemConfig(itemId)
+		if config != nil {
+			nowNum := int64(0)
+			_, ok := self.BagInfo[itemId]
+			if ok {
+				nowNum = self.BagInfo[itemId].ItemNum
+			}
+			fmt.Println(config.ItemName, "not enough", "----now num: ", nowNum)
+		}
+		return
+	}
+
+	switch itemConfig.SortType {
+	// case csvs.ITEMTYPE_NORMAL:
+	// 	self.AddItemToBag(itemId, num)
+	case csvs.ITEMTYPE_COOKBOOK:
+		self.UseCookBook(itemId, num, player)
+	case csvs.ITEMTYPE_FOOD:
+		// add temp attribute to role
+	default: // like to normal_item
+		fmt.Println(itemId, "the item can't be used")
+		return
+	}
+}
+
+func (self *ModBag) UseCookBook(itemId int, num int64, player *Player) {
+	cookBookConfig := csvs.GetCookBookConfig(itemId)
+	if cookBookConfig == nil {
+		fmt.Println(itemId, "cookbook isn't exist")
+		return
+	}
+
+	self.RemoveItem(itemId, num, player)
+	self.AddItem(cookBookConfig.Reward, num, player)
+}

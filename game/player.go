@@ -119,11 +119,12 @@ func (self *Player) SetHideShowTeam(isHide int) {
 
 // internal function
 func (self *Player) Run() {
-	fmt.Println("从0开始写原神服务器 ------ 试工具 v0.1")
-	fmt.Println("模拟用户创建成功OK ------ 开始测试")
+	fmt.Println("从0开始写原神服务器------测试工具v0.1")
+	fmt.Println("作者:B站------golang大海葵")
+	fmt.Println("模拟用户创建成功OK------开始测试")
 	fmt.Println("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
 	for {
-		fmt.Println(self.ModPlayer.Name, "--- 欢迎来到提瓦特大陆，请选择功能：1 基础信息 2 背包 3 地图(未开放)")
+		fmt.Println(self.ModPlayer.Name, ",欢迎来到提瓦特大陆,请选择功能：1基础信息2背包3(优菈UP池)模拟抽卡1000W次4地图(未开放)")
 		var modChoose int
 		fmt.Scan(&modChoose)
 		switch modChoose {
@@ -132,10 +133,11 @@ func (self *Player) Run() {
 		case 2:
 			self.HandleBag()
 		case 3:
+			self.HandlePool()
+		case 4:
 			self.HandleMap()
 		}
 	}
-
 }
 
 //基础信息
@@ -288,7 +290,7 @@ func (self *Player) HandleBagSetBirth() {
 //背包
 func (self *Player) HandleBag() {
 	for {
-		fmt.Println("当前处于基础信息界面,请选择操作：0返回1增加物品2扣除物品")
+		fmt.Println("当前处于基础信息界面,请选择操作：0返回1增加物品2扣除物品3使用物品")
 		var action int
 		fmt.Scan(&action)
 		switch action {
@@ -298,8 +300,15 @@ func (self *Player) HandleBag() {
 			self.HandleBagAddItem()
 		case 2:
 			self.HandleBagRemoveItem()
+		case 3:
+			self.HandleBagUseItem()
 		}
 	}
+}
+
+//抽卡
+func (self *Player) HandlePool() {
+	// self.ModPool.DoPool()
 }
 
 func (self *Player) HandleBagAddItem() {
@@ -320,6 +329,16 @@ func (self *Player) HandleBagRemoveItem() {
 	fmt.Println("物品数量")
 	fmt.Scan(&itemNum)
 	self.ModBag.RemoveItemToBag(itemId, int64(itemNum), self)
+}
+
+func (self *Player) HandleBagUseItem() {
+	itemId := 0
+	itemNum := 0
+	fmt.Println("物品ID")
+	fmt.Scan(&itemId)
+	fmt.Println("物品数量")
+	fmt.Scan(&itemNum)
+	self.ModBag.UseItem(itemId, int64(itemNum), self)
 }
 
 //地图
