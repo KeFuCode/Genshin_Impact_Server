@@ -217,3 +217,23 @@ bool 值在实际使用中较少，true/false 在数据库中存储时，有时�
 3. 配套测试工具
 4. up 角色池子
 5. 仓检
+
+## 3.1 表格配置
+当遇到抽卡 up 时，合理配置 Drop.csv 表格，使数据维护更加方便。
+
+难点： `csv_check.go`  中根据 drop 的配置信息，生成新的数据结构。
+```go
+func MakeDropGroupMap() {
+	configDropGroupMap := make(map[int]*DropGroup)
+	for _, v := range ConfigDropSlice {
+		dropGroup, ok := configDropGroupMap[v.DropId]
+		if !ok {
+			dropGroup = new(DropGroup)
+			dropGroup.DropId = v.DropId
+			configDropGroupMap[v.DropId] = dropGroup
+		}
+		dropGroup.WeightAll += v.Weight
+		dropGroup.DropConfigs = append(dropGroup.DropConfigs, v)
+	}
+}
+```
