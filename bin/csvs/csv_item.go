@@ -6,15 +6,16 @@ import (
 )
 
 const (
-	ITEMTYPE_NORMAL   = 1
-	ITEMTYPE_ROLE     = 2
-	ITEMTYPE_ICON     = 3
-	ITEMTYPE_CARD     = 4
-	ITEMTYPE_WEAPON   = 6
-	ITEMTYPE_RELICS   = 7
-	ITEMTYPE_COOKBOOK = 8 // identify cook_book to determine cook_skills
-	ITEMTYPE_COOk     = 9 // cook skills
-	ITEMTYPE_FOOD     = 10 // get food when use cook skills
+	ITEMTYPE_NORMAL    = 1
+	ITEMTYPE_ROLE      = 2
+	ITEMTYPE_ICON      = 3
+	ITEMTYPE_CARD      = 4
+	ITEMTYPE_WEAPON    = 6
+	ITEMTYPE_RELICS    = 7
+	ITEMTYPE_COOKBOOK  = 8  // identify cook_book to determine cook_skills
+	ITEMTYPE_COOk      = 9  // cook skills
+	ITEMTYPE_FOOD      = 10 // get food when use cook skills
+	ITEMTYPE_HOME_ITEM = 11
 )
 
 type ConfigItem struct {
