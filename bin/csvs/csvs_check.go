@@ -32,7 +32,7 @@ func MakeDropGroupMap() {
 		dropGroup.DropConfigs = append(dropGroup.DropConfigs, v)
 	}
 
-	RandDropTest()
+	// RandDropTest()
 }
 
 func RandDropTest() {
