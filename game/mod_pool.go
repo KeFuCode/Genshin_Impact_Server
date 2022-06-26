@@ -9,6 +9,7 @@ type PoolInfo struct {
 	PoolId        int
 	FiveStarTimes int
 	FourStarTimes int
+	isMustUp      int
 }
 
 type ModPool struct {
@@ -63,6 +64,24 @@ func (self *ModPool) DoUpPool() {
 					self.UpPoolInfo.FiveStarTimes = 0
 					self.UpPoolInfo.FourStarTimes++
 					fiveNum++
+
+					if self.UpPoolInfo.isMustUp == csvs.LOGIC_TRUE {
+						dropGroup := csvs.ConfigDropGroupMap[100012]
+						if dropGroup != nil {
+							roleIdConfig = csvs.GetRandDropNew(dropGroup)
+							if roleIdConfig == nil {
+								fmt.Println("数据异常")
+								return
+							}
+							self.UpPoolInfo.isMustUp = csvs.LOGIC_FALSE
+						}
+					}
+					if roleIdConfig.DropId == 100012 {
+						self.UpPoolInfo.isMustUp = csvs.LOGIC_FALSE
+					} else {
+						self.UpPoolInfo.isMustUp = csvs.LOGIC_TRUE
+					}
+
 				} else if roleConfig.Star == 4 {
 					self.UpPoolInfo.FourStarTimes = 0
 					self.UpPoolInfo.FiveStarTimes++
