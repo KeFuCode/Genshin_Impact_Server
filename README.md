@@ -245,4 +245,26 @@ func MakeDropGroupMap() {
 
 ## 3.3 卡池模块
 添加 `ModPool` 用于控制普通池、Up 池。
-为角色、武器抽卡添加保底机制，概览参考：[原神抽卡概率工具表](https://www.bilibili.com/read/cv12616453?spm_id_from=333.999.0.0)
+为角色、武器抽卡添加保底机制，抽卡概率设计参考：[原神抽卡概率工具表](https://www.bilibili.com/read/cv12616453?spm_id_from=333.999.0.0)
+
+代码解读：`mod_pool.go -> DoUpPool()`
+```go
+for _, config := range dropGroup.DropConfigs {
+	newConfig := new(csvs.ConfigDrop)
+	newConfig.DropId = config.DropId
+	newConfig.Result = config.Result
+	newConfig.IsEnd = config.IsEnd
+	if config.Result == 10001 {
+		newConfig.Weight = config.Weight + addFiveWeight
+	} else if config.Result == 10002 {
+		newConfig.Weight = config.Weight + addFourWeight
+	} else if config.Result == 10003 {
+		newConfig.Weight = config.Weight - addFiveWeight - addFourWeight
+	} else {
+		newConfig.Weight = config.Weight
+	}
+		newDropGroup.DropConfigs = append(newDropGroup.DropConfigs, newConfig)
+	}
+```
+此处代码是抽卡机制的保底设计，当抽卡次数满足保底条件时，修改获取卡牌的概率。
+对于 4 星或 5 星卡牌，增加获得卡牌的权重。对于 3 星卡牌，减少获得卡牌的权重。
