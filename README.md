@@ -245,4 +245,4 @@ func MakeDropGroupMap() {
 
 ## 3.3 卡池模块
 添加 `ModPool` 用于控制普通池、Up 池。
-为抽卡添加保底基础，概览参考：[原神抽卡概率工具表](https://www.bilibili.com/read/cv12616453?spm_id_from=333.999.0.0)
+为角色、武器抽卡添加保底机制，概览参考：[原神抽卡概率工具表](https://www.bilibili.com/read/cv12616453?spm_id_from=333.999.0.0)
