@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"server/bin/csvs"
 	"server/game"
-	_ "time"
+	"time"
 )
 
 func main() {
 	//********************
+	rand.Seed(time.Now().Unix())
 	// init: load server config
 	csvs.CheckLoadCsv()
 	// each 10s touch once

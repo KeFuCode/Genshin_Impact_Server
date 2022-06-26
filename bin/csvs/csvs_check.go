@@ -43,7 +43,7 @@ func RandDropTest() {
 
 	num := 0
 	for {
-		config := GetRandDrop(dropGroup)
+		config := GetRandDropNew(dropGroup)
 		if config.IsEnd == LOGIC_TRUE {
 			fmt.Println(GetItemName(config.Result))
 			num++
@@ -68,6 +68,26 @@ func GetRandDrop(dropGroup *DropGroup) *ConfigDrop {
 		randNow += v.Weight
 		if randNum < randNow {
 			return v
+		}
+	}
+
+	return nil
+}
+
+func GetRandDropNew(dropGroup *DropGroup) *ConfigDrop {
+	randNum := rand.Intn(dropGroup.WeightAll)
+	randNow := 0
+	for _, v := range dropGroup.DropConfigs {
+		randNow += v.Weight
+		if randNum < randNow {
+			if v.IsEnd == LOGIC_TRUE {
+				return v
+			}
+			dropGroup := ConfigDropGroupMap[v.Result]
+			if dropGroup == nil {
+				return nil
+			}
+			return GetRandDropNew(dropGroup)
 		}
 	}
 
