@@ -51,7 +51,7 @@ func NewTestPlayer() *Player {
 	player.ModHome = new(ModHome)
 	player.ModHome.HomeItemInfo = make(map[int]*HomeItem)
 	player.ModPool = new(ModPool)
-	player.ModPool.UpPoolInfo = make(map[int]*PoolInfo)
+	player.ModPool.UpPoolInfo = new(PoolInfo)
 
 	//*******************************
 	// 模块数据初始化
@@ -125,7 +125,6 @@ func (self *Player) SetHideShowTeam(isHide int) {
 
 // internal function
 func (self *Player) Run() {
-	self.ModPool.DoPool()
 	fmt.Println("从0开始写原神服务器------测试工具v0.1")
 	fmt.Println("作者:B站------golang大海葵")
 	fmt.Println("模拟用户创建成功OK------开始测试")
@@ -315,7 +314,7 @@ func (self *Player) HandleBag() {
 
 //抽卡
 func (self *Player) HandlePool() {
-	// self.ModPool.DoPool()
+	self.ModPool.DoUpPool()
 }
 
 func (self *Player) HandleBagAddItem() {
