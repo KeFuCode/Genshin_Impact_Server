@@ -63,3 +63,14 @@ func (self *ModRole) AddItem(roleId int, num int64, player *Player) {
 	player.ModCard.CheckGetCard(roleId, 10) // friendliness: 10
 
 }
+
+func (self *ModRole) HandleSendRoleInfo() {
+	fmt.Println(fmt.Sprintf("当前拥有角色信息如下:"))
+	for _, v := range self.RoleInfo {
+		v.SendRoleInfo()
+	}
+}
+
+func (self *RoleInfo) SendRoleInfo() {
+	fmt.Println(fmt.Sprintf("%s:,累计获得次数:%d", csvs.GetItemName(self.RoleId), self.GetTimes))
+}

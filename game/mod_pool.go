@@ -122,7 +122,7 @@ func (self *ModPool) DoUpPool() {
 	}
 }
 
-func (self *ModPool) HandleUpPoolTen() {
+func (self *ModPool) HandleUpPoolTen(player *Player) {
 	for i := 0; i < 10; i++ {
 		self.AddTimes()
 		dropGroup := csvs.ConfigDropGroupMap[1000]
@@ -184,7 +184,8 @@ func (self *ModPool) HandleUpPoolTen() {
 					self.UpPoolInfo.FourStarTimes = 0
 				}
 			}
-			fmt.Println(fmt.Sprintf("第%d抽抽中:%s", i+1, csvs.GetItemName(roleIdConfig.Result)))
+			// fmt.Println(fmt.Sprintf("第%d抽抽中:%s", i+1, csvs.GetItemName(roleIdConfig.Result)))
+			player.ModBag.AddItem(roleIdConfig.Result, 1, player)
 		}
 	}
 	if self.UpPoolInfo.IsMustUp == csvs.LOGIC_FALSE {
@@ -197,7 +198,7 @@ func (self *ModPool) HandleUpPoolTen() {
 
 }
 
-func (self *ModPool) HandleUpPoolSingle(times int) {
+func (self *ModPool) HandleUpPoolSingle(times int, player *Player) {
 	if times <= 0 || times > 100000000 {
 		fmt.Println("请输入正确的数值(1~100000000)")
 		return
@@ -271,6 +272,8 @@ func (self *ModPool) HandleUpPoolSingle(times int) {
 				}
 			}
 			result[roleIdConfig.Result]++
+			player.ModBag.AddItem(roleIdConfig.Result, 1, player)
+
 		}
 	}
 
