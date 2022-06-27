@@ -12,6 +12,8 @@ var manageBanWord *ManageBanWord
 type ManageBanWord struct {
 	BanWordBase  []string
 	BanWordExtra []string
+	Test         map[int]int
+	MsgChannel   chan int
 }
 
 func GetManageBanWord() *ManageBanWord {
@@ -19,6 +21,8 @@ func GetManageBanWord() *ManageBanWord {
 		manageBanWord = new(ManageBanWord)
 		manageBanWord.BanWordBase = []string{"外挂", "工具"}
 		manageBanWord.BanWordExtra = []string{"原神"}
+		manageBanWord.Test = make(map[int]int)
+		manageBanWord.MsgChannel = make(chan int)
 	}
 
 	return manageBanWord
@@ -54,14 +58,20 @@ func (self *ManageBanWord) Run() {
 		select {
 		case <-triker.C: // triker will touch every 1s
 			if time.Now().Unix()%10 == 0 {
-				// fmt.Println("update word library")
+				fmt.Println("update word library")
+				GetServer().UpdateBanWord(self.BanWordBase)
 			} else {
-				// fmt.Println("waiting...")
+
+			}
+		case _, ok := <-self.MsgChannel:
+			if !ok {
+				GetServer().GoDone()
+				return
 			}
 		}
 	}
 }
 
-func (self *ManageBanWord) Close()  {
-	GetServer().GoDone()
+func (self *ManageBanWord) Close() {
+	close(self.MsgChannel)
 }

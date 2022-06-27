@@ -3,13 +3,16 @@ package game
 import (
 	"fmt"
 	"math/rand"
+	"regexp"
 	"server/bin/csvs"
 	"sync"
 	"time"
 )
 
 type Server struct {
-	Wait sync.WaitGroup
+	Wait        sync.WaitGroup
+	BanWordBase []string
+	Lock        *sync.RWMutex
 }
 
 var server *Server
@@ -17,6 +20,7 @@ var server *Server
 func GetServer() *Server {
 	if server == nil {
 		server = new(Server)
+		server.Lock = new(sync.RWMutex)
 	}
 	return server
 }
@@ -58,4 +62,24 @@ func (self *Server) AddGo() {
 
 func (self *Server) GoDone() {
 	self.Wait.Done()
+}
+
+func (self *Server) IsBanWord(txt string) bool {
+	self.Lock.RLock()
+	defer self.Lock.RUnlock()
+	for _, v := range self.BanWordBase {
+		match, _ := regexp.MatchString(v, txt)
+		fmt.Println(match, v)
+		if match {
+			return match
+		}
+	}
+
+	return false
+}
+
+func (self *Server) UpdateBanWord(banWord []string) {
+	self.Lock.Lock()
+	defer self.Lock.Unlock()
+	self.BanWordBase = banWord
 }
