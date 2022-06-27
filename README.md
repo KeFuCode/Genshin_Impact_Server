@@ -277,3 +277,28 @@ for _, config := range dropGroup.DropConfigs {
 
 ## 3.3 仓库检测
 抽到的角色/武器，添加进背包，并更新测试模块。
+
+# 4 地图模块
+需求分析：
+1. 一个地图模块，包含许多子地图（世界地图、秘境地图）。
+2. 世界地图组成元素：采集物（植物、矿物）、怪物（低级怪物、高级怪物）、传送点、七天神像、宝箱。
+3. 秘境地图组分为两类：圣遗物秘境、封魔龙。
+4. 不同玩家对于地图的探索度各不相同，因此地图模块应该绑定至玩家账号上面。
+
+数据结构：
+```go
+type ModMap struct {
+   MapInfo map[int]*Map
+}   
+
+type Map struct {
+   MapId int
+   EventInfo map[int]*Event
+}
+
+// 采集物需要保存当前状态（未采集、已采集等）
+type Event struct {
+   EventId int
+   State int
+}
+```
