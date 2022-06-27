@@ -21,7 +21,12 @@ func (self *ModPool) DoUpPool() {
 	fourNum := 0
 	fiveNum := 0
 	resultEach := make(map[int]int)
+	resultEachTest := make(map[int]int)
+	fiveTest := 0
 	for i := 0; i < 100000000; i++ {
+		if i%10 == 0 {
+			fiveTest = 0
+		}
 		dropGroup := csvs.ConfigDropGroupMap[1000]
 		if dropGroup == nil {
 			return
@@ -62,6 +67,7 @@ func (self *ModPool) DoUpPool() {
 			roleConfig := csvs.GetRoleConfig(roleIdConfig.Result)
 			if roleConfig != nil {
 				if roleConfig.Star == 5 {
+					fiveTest++
 					resultEach[self.UpPoolInfo.FiveStarTimes]++
 					self.UpPoolInfo.FiveStarTimes = 0
 					self.UpPoolInfo.FourStarTimes++
@@ -95,6 +101,9 @@ func (self *ModPool) DoUpPool() {
 			}
 			result[roleIdConfig.Result]++
 		}
+		if i%10 == 9 {
+			resultEachTest[fiveTest]++
+		}
 	}
 
 	for k, v := range result {
@@ -105,5 +114,9 @@ func (self *ModPool) DoUpPool() {
 
 	for k, v := range resultEach {
 		fmt.Printf("no.%d times get 5 star times: %d\n", k, v)
+	}
+
+	for k, v := range resultEachTest {
+		fmt.Printf("10_series get %d 5_star times: %d\n", k, v)
 	}
 }
