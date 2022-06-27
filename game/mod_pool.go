@@ -16,6 +16,11 @@ type ModPool struct {
 	UpPoolInfo *PoolInfo
 }
 
+func (self *ModPool) AddTimes() {
+	self.UpPoolInfo.FiveStarTimes++
+	self.UpPoolInfo.FourStarTimes++
+}
+
 func (self *ModPool) DoUpPool() {
 	result := make(map[int]int)
 	fourNum := 0
@@ -24,6 +29,7 @@ func (self *ModPool) DoUpPool() {
 	resultEachTest := make(map[int]int)
 	fiveTest := 0
 	for i := 0; i < 100000000; i++ {
+		self.AddTimes()
 		if i%10 == 0 {
 			fiveTest = 0
 		}
@@ -70,7 +76,6 @@ func (self *ModPool) DoUpPool() {
 					fiveTest++
 					resultEach[self.UpPoolInfo.FiveStarTimes]++
 					self.UpPoolInfo.FiveStarTimes = 0
-					self.UpPoolInfo.FourStarTimes++
 					fiveNum++
 
 					if self.UpPoolInfo.isMustUp == csvs.LOGIC_TRUE {
@@ -78,7 +83,7 @@ func (self *ModPool) DoUpPool() {
 						if dropGroup != nil {
 							roleIdConfig = csvs.GetRandDropNew(dropGroup)
 							if roleIdConfig == nil {
-								fmt.Println("数据异常")
+								fmt.Println("data error")
 								return
 							}
 							self.UpPoolInfo.isMustUp = csvs.LOGIC_FALSE
@@ -92,12 +97,8 @@ func (self *ModPool) DoUpPool() {
 
 				} else if roleConfig.Star == 4 {
 					self.UpPoolInfo.FourStarTimes = 0
-					self.UpPoolInfo.FiveStarTimes++
 					fourNum++
 				}
-			} else {
-				self.UpPoolInfo.FiveStarTimes++
-				self.UpPoolInfo.FourStarTimes++
 			}
 			result[roleIdConfig.Result]++
 		}
