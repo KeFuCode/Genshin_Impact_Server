@@ -74,3 +74,21 @@ func (self *ModRole) HandleSendRoleInfo() {
 func (self *RoleInfo) SendRoleInfo() {
 	fmt.Println(fmt.Sprintf("%s:,累计获得次数:%d", csvs.GetItemName(self.RoleId), self.GetTimes))
 }
+
+func (self *ModRole) GetRoleInfoForPoolCheck() (map[int]int, map[int]int) {
+	fiveInfo := make(map[int]int)
+	fourInfo := make(map[int]int)
+
+	for _, v := range self.RoleInfo {
+		roleConfig := csvs.GetRoleConfig(v.RoleId)
+		if roleConfig == nil {
+			continue
+		}
+		if roleConfig.Star == 5 {
+			fiveInfo[roleConfig.RoleId] = v.GetTimes
+		} else if roleConfig.Star == 4 {
+			fourInfo[roleConfig.RoleId] = v.GetTimes
+		}
+	}
+	return fiveInfo, fourInfo
+}

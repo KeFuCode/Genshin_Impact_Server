@@ -93,3 +93,58 @@ func GetRandDropNew(dropGroup *DropGroup) *ConfigDrop {
 
 	return nil
 }
+
+func GetRandDropNew1(dropGroup *DropGroup, fiveInfo map[int]int, fourInfo map[int]int) *ConfigDrop {
+	for _, v := range dropGroup.DropConfigs {
+		_, ok := fiveInfo[v.Result]
+		if ok {
+			index := 0
+			maxGetTime := 0
+			for k, config := range dropGroup.DropConfigs {
+				_, nowOK := fiveInfo[config.Result]
+				if !nowOK {
+					continue
+				}
+				if maxGetTime < fiveInfo[config.Result] {
+					maxGetTime = fiveInfo[config.Result]
+					index = k
+				}
+			}
+			return dropGroup.DropConfigs[index]
+		}
+
+		_, ok = fourInfo[v.Result]
+		if ok {
+			index := 0
+			maxGetTime := 0
+			for k, config := range dropGroup.DropConfigs {
+				_, nowOK := fourInfo[config.Result]
+				if !nowOK {
+					continue
+				}
+				if maxGetTime < fourInfo[config.Result] {
+					maxGetTime = fourInfo[config.Result]
+					index = k
+				}
+			}
+			return dropGroup.DropConfigs[index]
+		}
+	}
+
+	randNum := rand.Intn(dropGroup.WeightAll)
+	randNow := 0
+	for _, v := range dropGroup.DropConfigs {
+		randNow += v.Weight
+		if randNum < randNow {
+			if v.IsEnd == LOGIC_TRUE {
+				return v
+			}
+			dropGroup := ConfigDropGroupMap[v.Result]
+			if dropGroup == nil {
+				return nil
+			}
+			return GetRandDropNew1(dropGroup, fiveInfo, fourInfo)
+		}
+	}
+	return nil
+}

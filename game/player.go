@@ -315,7 +315,7 @@ func (self *Player) HandleBag() {
 //抽卡
 func (self *Player) HandlePool() {
 	for {
-		fmt.Println("当前处于模拟抽卡界面,请选择操作：0返回1角色信息2十连抽(入包)3单抽(可选次数，入包)4五星爆点测试5十连多黄测试6视频原版函数")
+		fmt.Println("当前处于模拟抽卡界面,请选择操作：0返回1角色信息2十连抽(入包)3单抽(可选次数，入包)4五星爆点测试5十连多黄测试6视频原版函数7单抽(仓检版,独宠一人)")
 		var action int
 		fmt.Scan(&action)
 		switch action {
@@ -342,6 +342,11 @@ func (self *Player) HandlePool() {
 			self.ModPool.HandleUpPoolFiveTest(times)
 		case 6:
 			self.ModPool.DoUpPool()
+		case 7:
+			fmt.Println("请输入抽卡次数,最大值1亿(最大耗时约30秒):")
+			var times int
+			fmt.Scan(&times)
+			self.ModPool.HandleUpPoolSingleCheck1(times,self)
 		}
 	}
 }
