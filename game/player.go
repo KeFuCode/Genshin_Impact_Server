@@ -130,7 +130,7 @@ func (self *Player) Run() {
 	fmt.Println("模拟用户创建成功OK------开始测试")
 	fmt.Println("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
 	for {
-		fmt.Println(self.ModPlayer.Name, ",欢迎来到提瓦特大陆,请选择功能：1基础信息2背包3(优菈UP池)模拟抽卡1000W次4地图(未开放)")
+		fmt.Println(self.ModPlayer.Name, ",欢迎来到提瓦特大陆,请选择功能：1基础信息2背包3(优菈UP池)模拟抽卡1000W次4地图(未开放)5关闭服务器")
 		var modChoose int
 		fmt.Scan(&modChoose)
 		switch modChoose {
@@ -142,6 +142,8 @@ func (self *Player) Run() {
 			self.HandlePool()
 		case 4:
 			self.HandleMap()
+		case 5:
+			GetServer().Close()
 		}
 	}
 }
@@ -347,6 +349,8 @@ func (self *Player) HandlePool() {
 			var times int
 			fmt.Scan(&times)
 			self.ModPool.HandleUpPoolSingleCheck1(times,self)
+		case 8:
+			GetServer().Close()
 		}
 	}
 }

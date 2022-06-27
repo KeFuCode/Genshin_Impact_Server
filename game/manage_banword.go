@@ -45,6 +45,7 @@ func (self *ManageBanWord) IsBanWord(txt string) bool {
 }
 
 func (self *ManageBanWord) Run() {
+	GetServer().AddGo()
 	// load base word library
 	self.BanWordBase = csvs.GetBanWordBase()
 
@@ -59,4 +60,8 @@ func (self *ManageBanWord) Run() {
 			}
 		}
 	}
+}
+
+func (self *ManageBanWord) Close()  {
+	GetServer().GoDone()
 }
