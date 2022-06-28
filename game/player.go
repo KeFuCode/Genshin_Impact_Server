@@ -88,6 +88,8 @@ func (self *Player) InitData() {
 			return
 		}
 		self.ModPlayer.SaveData(selfPath + "/player.json")
+	} else {
+		self.ModPlayer.LoadData(selfPath + "/player.json")
 	}
 }
 
@@ -428,4 +430,18 @@ func (self *ModPlayer) SaveData(path string) {
 	if err != nil {
 		return
 	}
+}
+
+func (self *ModPlayer) LoadData(path string) {
+	configFile, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = json.Unmarshal(configFile, &self)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	return
 }

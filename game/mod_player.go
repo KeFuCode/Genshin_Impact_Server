@@ -31,6 +31,8 @@ type ModPlayer struct {
 	// 隐藏字段
 	Prohibit int // account status
 	IsGm     int // GM account status
+
+	test int
 }
 
 // external interface: gamer set ModPlayer inner value
