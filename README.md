@@ -309,3 +309,8 @@ type Event struct {
 借助 `sync.WaitGroup` 可以轻松实现协程的开启/等待/关闭。实现的原理，可以简化为定义一个 `num int` ，开启协程时 `num=1` ，关闭协程时 `num=0` ，等待协程时，等待 `num` 的数值由 1 变为 0 。
 
 如果在不加锁的情况下，多个协程同时向同一块内存写入数据，会触发异常：`fatal error: concurrent map writes` 。
+
+知识盲区：
+1. `os.Signal`
+2. `signal.Notify`
+3. `syscall.SIGINT`

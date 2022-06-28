@@ -3,9 +3,12 @@ package game
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"os/signal"
 	"regexp"
 	"server/bin/csvs"
 	"sync"
+	"syscall"
 	"time"
 )
 
@@ -37,6 +40,7 @@ func (self *Server) Start() {
 
 	playerTest := NewTestPlayer()
 	go playerTest.Run()
+	go self.SignalHandle()
 
 	// each 10s touch once
 	// triker := time.NewTicker(time.Second * 10)
@@ -82,4 +86,17 @@ func (self *Server) UpdateBanWord(banWord []string) {
 	self.Lock.Lock()
 	defer self.Lock.Unlock()
 	self.BanWordBase = banWord
+}
+
+func (self *Server) SignalHandle() {
+	channelSignal := make(chan os.Signal)
+	signal.Notify(channelSignal, syscall.SIGINT)
+
+	for {
+		select {
+		case <-channelSignal:
+			fmt.Println("get syscall.SIGINT")
+			self.Close()
+		}
+	}
 }
