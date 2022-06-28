@@ -24,6 +24,8 @@ type Player struct {
 	ModCook       *ModCook
 	ModHome       *ModHome
 	ModPool       *ModPool
+
+	modManage map[string]interface{}
 }
 
 func NewTestPlayer() *Player {
@@ -348,7 +350,7 @@ func (self *Player) HandlePool() {
 			fmt.Println("请输入抽卡次数,最大值1亿(最大耗时约30秒):")
 			var times int
 			fmt.Scan(&times)
-			self.ModPool.HandleUpPoolSingleCheck1(times,self)
+			self.ModPool.HandleUpPoolSingleCheck1(times, self)
 		case 8:
 			GetServer().Close()
 		}

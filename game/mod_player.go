@@ -56,7 +56,12 @@ func (self *ModPlayer) SetCard(cardId int, player *Player) {
 	fmt.Println("Now Card: ", player.ModPlayer.Card)
 }
 
-func (self *ModPlayer) RecvSetName(name string, player *Player) {
+func (self *ModPlayer) RecvSetName(name string, playerTest interface{}) {
+	player := playerTest.(*Player)
+
+	if GetManageBanWord().IsBanWord(name) {
+		return
+	}
 
 	player.ModPlayer.Name = name
 	fmt.Println("Now Name: ", player.ModPlayer.Name)

@@ -314,3 +314,10 @@ type Event struct {
 1. `os.Signal`
 2. `signal.Notify`
 3. `syscall.SIGINT`
+
+# 6 Golang 反射
+反射的核心功能：类型识别、数据读取。
+反射的使用场景：字符解析、文本文件处理、处理配置文件、处理数据库。
+
+Golang 中 `json` 的引入，方便 `json` 字段与代码逻辑做出区分。
+在Golang 中，变量/函数名的大小写，代表着访问权限( public/private ) ，引入 `json` 后，`json` 字段名可以与声明做出区分。

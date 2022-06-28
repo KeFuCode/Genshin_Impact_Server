@@ -1,7 +1,9 @@
 package game
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"os"
 	"os/signal"
@@ -12,10 +14,23 @@ import (
 	"time"
 )
 
+type DBConfig struct {
+	DBUser     string `json:"dbuser"`
+	DBPassword string `json:"dbpassword"`
+}
+
+type ServerConfig struct {
+	ServerId int       `json:"serverid"`
+	Host     string    `json:"host"`
+	DBConfig *DBConfig `json:"database"`
+}
+
 type Server struct {
 	Wait        sync.WaitGroup
 	BanWordBase []string
 	Lock        *sync.RWMutex
+
+	Config *ServerConfig
 }
 
 var server *Server
@@ -41,6 +56,7 @@ func (self *Server) Start() {
 	playerTest := NewTestPlayer()
 	go playerTest.Run()
 	go self.SignalHandle()
+	self.LoadConfig()
 
 	// each 10s touch once
 	// triker := time.NewTicker(time.Second * 10)
@@ -99,4 +115,18 @@ func (self *Server) SignalHandle() {
 			self.Close()
 		}
 	}
+}
+
+func (self *Server) LoadConfig() {
+	configFile, err := ioutil.ReadFile("./config.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = json.Unmarshal(configFile, &self.Config)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	return
 }
