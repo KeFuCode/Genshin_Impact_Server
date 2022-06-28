@@ -321,3 +321,6 @@ type Event struct {
 
 Golang 中 `json` 的引入，方便 `json` 字段与代码逻辑做出区分。
 在Golang 中，变量/函数名的大小写，代表着访问权限( public/private ) ，引入 `json` 后，`json` 字段名可以与声明做出区分。
+
+# 7 Json 序列化
+将内存中存储的数据，通过 Json 序列化之后，生成一个 Json 文件，保存到本地。

@@ -22,6 +22,7 @@ type DBConfig struct {
 type ServerConfig struct {
 	ServerId int       `json:"serverid"`
 	Host     string    `json:"host"`
+	LocalSavePath string    `json:"localsavepath"`
 	DBConfig *DBConfig `json:"database"`
 }
 
@@ -44,6 +45,7 @@ func GetServer() *Server {
 }
 
 func (self *Server) Start() {
+	self.LoadConfig()
 	//********************
 	rand.Seed(time.Now().Unix())
 	// init: load server config
@@ -56,7 +58,7 @@ func (self *Server) Start() {
 	playerTest := NewTestPlayer()
 	go playerTest.Run()
 	go self.SignalHandle()
-	self.LoadConfig()
+	
 
 	// each 10s touch once
 	// triker := time.NewTicker(time.Second * 10)

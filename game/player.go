@@ -1,7 +1,10 @@
 package game
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"server/bin/csvs"
 	_ "sync"
 )
@@ -62,8 +65,30 @@ func NewTestPlayer() *Player {
 	player.ModPlayer.WorldLevelNow = 6
 
 	//*******************************
+	player.ModPlayer.UserId = 10000666
+	player.InitData()
 
 	return player
+}
+
+func (self *Player) InitData() {
+	path := GetServer().Config.LocalSavePath
+	_, err := os.Stat(path)
+	if err != nil {
+		err = os.Mkdir(path, os.ModePerm)
+		if err != nil {
+			return
+		}
+	}
+	selfPath := path + fmt.Sprintf("/%d", self.ModPlayer.UserId)
+	_, err = os.Stat(selfPath)
+	if err != nil {
+		err = os.Mkdir(selfPath, os.ModePerm)
+		if err != nil {
+			return
+		}
+		self.ModPlayer.SaveData(selfPath + "/player.json")
+	}
 }
 
 // external interface: receive client request
@@ -392,4 +417,15 @@ func (self *Player) HandleMap() {
 	fmt.Println("向着星辰与深渊,欢迎来到冒险家协会！")
 	fmt.Println("当前位置:", "蒙德城")
 	fmt.Println("地图模块还没写到......")
+}
+
+func (self *ModPlayer) SaveData(path string) {
+	content, err := json.Marshal(self)
+	if err != nil {
+		return
+	}
+	err = ioutil.WriteFile(path, content, os.ModePerm)
+	if err != nil {
+		return
+	}
 }
